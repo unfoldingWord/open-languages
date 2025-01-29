@@ -1,0 +1,28 @@
+name: Deploy Migrations to Staging
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_STAGING_DB_PASSWORD }}
+      SUPABASE_PROJECT_ID: ${{ secrets.SUPABASE_STAGING_PROJECT_ID }}
+      VERCEL_BUILD_HOOK: ${{ secrets.STAGING_VERCEL_BUILD_HOOK }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - run: supabase link --project-ref $SUPABASE_PROJECT_ID
+      - run: supabase db push
+      - run: curl https://api.vercel.com/v1/integrations/deploy/prj_Kvxi4rFQXu3KPsW5u8oSK74NKJ4I/zoHkpxfYnp
