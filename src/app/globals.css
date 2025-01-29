@@ -1,0 +1,97 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* .gradient-polygon {
+  fill: url(#gradient);
+  fill-opacity: 1;
+} */
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+.leaflet-control-zoom leaflet-bar leaflet-control {
+  margin-bottom: 100px;
+}
+
+.leaflet-control-container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -60px;
+  margin-bottom: 100px;
+}
+
+@layer base {
+  h2 {
+    @apply py-4 text-4xl font-black text-gray-800;
+  }
+
+  .button {
+    @apply custom-focus rounded-full border-2 border-secondary bg-white px-8 py-2 font-bold text-secondary hover:bg-secondary hover:text-white focus:bg-secondary focus:text-white;
+  }
+
+  .button-inverse {
+    @apply custom-focus rounded-full border-2 border-white bg-secondary px-8 py-2 font-bold text-white hover:border-secondary hover:bg-white hover:text-secondary focus:border-secondary focus:bg-white focus:text-secondary;
+  }
+
+  .card {
+    @apply column min-w-[20rem] w-full items-center gap-8 rounded-lg py-8 px-4 shadow-md sm:min-w-[24rem] sm:px-10 bg-white;
+  }
+
+  .column {
+    @apply flex flex-col items-start justify-center gap-4;
+  }
+
+  .custom-focus {
+    @apply focus:border-secondary focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2;
+  }
+
+  .heading {
+    @apply text-lg font-semibold text-gray-700;
+  }
+
+  .highlight {
+    @apply ml-1 rounded-lg bg-gray-100 p-2 font-mono;
+  }
+
+  .error {
+    @apply w-full text-center text-red-600;
+  }
+
+  .input {
+    @apply custom-focus w-full rounded-xl p-2 border border-slate-300 focus:shadow-none;
+  }
+
+  .link {
+    @apply custom-focus rounded-md font-semibold text-secondary;
+  }
+
+  .row {
+    @apply flex flex-row items-center justify-start gap-1;
+  }
+}
+.popup-with-arrow::after {
+  content: "";
+  position: absolute;
+  bottom: -20px; /* Position it below the popup */
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%); /* Align arrow with the center */
+  border-width: 10px;
+  border-style: solid;
+  z-index: 10;
+  border-color: white transparent transparent transparent; /* Downwards-pointing arrow */
+}

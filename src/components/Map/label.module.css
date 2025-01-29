@@ -1,0 +1,25 @@
+.customLabel {
+  color: white;
+  background-color: black;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-right: 8px;
+  padding-left: 8px;
+  border-radius: 7px;
+  border-color: black;
+}
+
+.clickedLabel {
+  color: white;
+  background-color: gray;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-right: 8px;
+  padding-left: 8px;
+  border-radius: 7px;
+  border-color: gray;
+}
+
+.zoomControl {
+  background-color: black;
+}
