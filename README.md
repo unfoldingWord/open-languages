@@ -19,13 +19,13 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 The database dumps are compressed in a tar.gz file. Extract them before proceeding:
 ```bash
 cd data
-tar -xzf db_dump.tar.gz
+tar -xzf db_backup.tar.gz
 ```
 
 ## Prerequisites
 - PostgreSQL installed on your system
 - PostGIS extension available
-- Database dump file found in `/data/`(referred to as `db_dump.sql` in these instructions)
+- The extracted directory will have two files `ol_schema.sql`(schema) and `ol_data.sql`(data).
 
 ## Step-by-Step Setup Instructions
 
@@ -36,40 +36,9 @@ CREATE DATABASE your_database_name;
 \c your_database_name
 ```
 
-### 2. Install Required Extensions
-```sql
-CREATE EXTENSION IF NOT EXISTS postgis SCHEMA public;
-```
-
-### 3. Prepare for Data Restoration
-Due to circular foreign key constraints, we need to follow a specific restore process:
-
-#### Option A: Temporary Disable Triggers (Recommended for production)
+### 2. Restore Database Schema and Data
 ```bash
-# Restore with triggers disabled to avoid circular foreign key constraints
-pg_restore --no-owner --no-privileges --disable-triggers -U postgres -d your_database_name db_dump.sql
-```
-
-#### Option B: Structure and Data Separate Restore
-```bash
-# 1. First restore only the schema (structure)
-pg_restore --no-owner --no-privileges --schema-only -U postgres -d your_database_name db_dump.sql
-
-# 2. Then restore data
-pg_restore --no-owner --no-privileges --data-only -U postgres -d your_database_name db_dump.sql
-```
-
-### 4. Post-Restore Steps
-```sql
--- Verify PostGIS installation
-SELECT PostGIS_Version();
-
--- Verify table count
-SELECT count(*) FROM information_schema.tables WHERE table_schema = 'public';
-
--- Re-enable triggers if you used Option A
--- Replace table_name with actual table names
-ALTER TABLE table_name ENABLE TRIGGER ALL;
+psql -d your_database_name -f schema.sql -f data.sql
 ```
 
 
